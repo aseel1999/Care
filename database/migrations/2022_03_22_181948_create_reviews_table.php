@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+        
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->integer('review_rating');

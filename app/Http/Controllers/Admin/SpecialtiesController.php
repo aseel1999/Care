@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Specialtie;
-use App\Models\Service;
+
 class SpecialtiesController extends Controller
 {
     /**
@@ -13,11 +13,12 @@ class SpecialtiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $specialties =Specialtie::get();
-        $services=Service::get();
-        return view('admin.specialties.index',compact('specialties','services'));
+        $specialties = Specialtie::when($request->search, function ($q) use ($request){
+            return $q->where('name',  '%' .$request->search .'%');
+        })->latest()->paginate(5);
+        return view('admin.specialties.index',compact('specialties'));
     }
 
     /**

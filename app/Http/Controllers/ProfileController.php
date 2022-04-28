@@ -1,18 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\User;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-       
-        return view('admin.profiles.index');
+        $user=User::findOrFail($id);
+  
+        return view('admin.profiles.index',compact('user'));
     }
-    // Update profile
+    //update
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -20,7 +20,7 @@ class ProfileController extends Controller
             'social_status' => 'required',
             'blood_type'=>'required'
         ]);
-        User::where('id', $user->id)
+        User::where('id', auth()->user->id)
             ->update($request->except('_token'));
         return redirect()->back()->with('message', 'Your profile was updated!');
     }
@@ -34,7 +34,7 @@ class ProfileController extends Controller
             $destination = public_path('/profile');
             $image->move($destination, $name);
 
-            $user = User::where('id',$user->id)->update(['image' => $name]);
+            $user = User::where('id',auth()->user->id)->update(['image' => $name]);
 
             return redirect()->back()->with('message', 'profile updated');
         }

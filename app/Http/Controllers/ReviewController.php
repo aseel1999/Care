@@ -11,8 +11,8 @@ class ReviewController extends Controller
 {
     public function index()
 {
-    $doctors = Doctor::query()->with('reviews')->get();
-    return view('admin.reviews.index', compact('doctors'));
+    $reviews=Review::all();
+    return view('admin.reviews.index', compact('reviews'));
 }
    
 }

@@ -15,9 +15,7 @@ class ContactController extends Controller
 public function edit($id)
     {
         $contact = Contact::find($id);
-        $city = City::all();
-
-        return view('contact.edit', compact('contact','city'));
+        return view('contacts.edit', compact('contact'));
     }
 
     /**

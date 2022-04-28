@@ -19,7 +19,7 @@
                         <li class="breadcrumb-item">
                             <a href="../index.html"><i class="ik ik-home"></i></a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#">Department</a></li>
+                        <li class="breadcrumb-item"><a href="#">Contact</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Update</li>
                     </ol>
                 </nav>

@@ -31,6 +31,7 @@ return new class extends Migration
             ]);
            $table->text('patient_diseases')->nullable();
            $table->text('patient_medicines')->nullable();
+           $table->foreignIdFor(\App\Models\Doctor::class,'doctor_id')->constrained()->casecade()->nullable();
             
             $table->rememberToken();
             $table->timestamps();

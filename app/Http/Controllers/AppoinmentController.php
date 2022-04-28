@@ -4,26 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appoinment;
-
+use App\Models\User;
 use App\Models\Time_slot;
 
 class AppoinmentController extends Controller
 {
     public function index()
     {
-        
-        $myAppoinments = Appoinment::latest()->where('user_id', auth()->user()->id)->get();
-        return view('admin.appoinments.index', compact('myAppoinments'));
+        $user=User::all();
+        $myAppoinments = Appoinment::latest()->get();
+        return view('admin.appoinments.index', compact('user','myAppoinments'));
     }
-
 
     public function check(Request $request)
     {
         $appoinment_date = $request->date;
-        $appoinment = Appoinment::where('appoinment_date', $appoinment_date)->where('user_id', $user->id)->first();
-        if (!$appointment) {
+        $appoinment = Appoinment::where('appoinment_date', $appoinment_date)->first();
+        
+        if (!$appoinment) {
             return redirect()->to('/appoinment')->with('errMessage', 'Appointment time is not available for this date');
-        };
+        }
         $appoinmentId = $appoinment->id;
         $times = Time_slot::where('appoinment_id', $appoinmentId)->get();
         return view('admin.appoinments.index', compact('times', 'appoinmentId', 'appoinment_date'));
@@ -33,16 +33,9 @@ class AppoinmentController extends Controller
     public function updateTime(Request $request)
     {
         $appoinmentId = $request->appoinmentId;
-        $date = Appoinment::where('id', $appoinmentId)->get('date')->first()->date;
+        $date = Appoinment::where('id', $appoinmentId)->get('appoinment_date')->first();
         Time_slot::where('appoinment_id', $appoinmentId)->delete();
-        foreach ($request->time as $time) {
-            Time_slot::create([
-                'time' => $time,
-                'appoinment_id' => $appoinmentId,
-                'status' => 0,
-
-            ]);
-        }
+        
         return redirect()->route('appoinment.index')->with('message', 'Appointment time for ' . $date . ' is updated successfully!');
 }
 }

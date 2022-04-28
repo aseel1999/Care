@@ -9,6 +9,6 @@ class Service extends Model
 {
     use HasFactory;
     public function specialtiess(){
-        return $this->belongTo(Specialtie::class);
+        return $this->belongsTo(Specialtie::class);
     }
 }

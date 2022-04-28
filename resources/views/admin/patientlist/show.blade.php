@@ -20,7 +20,7 @@
                                         <td>{{ $doctor1->users->name }}</td>
                                     </tr>
                                     @empty
-                                    <td>There is notable on</td>
+                                    <td>There is notable on this</td>
                                 @endforelse
 
                             </tbody>

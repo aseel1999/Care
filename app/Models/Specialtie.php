@@ -19,8 +19,6 @@ class Specialtie extends Model
     public function doct(){
         return $this->belongsTo(Doctor::class);
     }
-    public function doctoor(){
-        return $this->hasOne(Doctor::class);
-    }
+    
 
 }

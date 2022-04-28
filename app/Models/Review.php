@@ -18,7 +18,5 @@ class Review extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
-    public function doctorr(){
-        return $this->belongsTo(Doctor::class);
-    }
+    
 }

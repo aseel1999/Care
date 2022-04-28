@@ -20,7 +20,7 @@
 
 
                     <div class="nav-item has-sub">
-                        <a href="javascript:void(0)"><i class="ik ik-list"></i><span>Appointment Time</span> <span
+                        <a href="{{route('appoinment.index')}}"><i class="ik ik-list"></i><span>Appointment Time</span> <span
                                 class="badge badge-danger"></span></a>
                         <div class="submenu-content">
                             <a href="#" class="menu-item">Create</a>
@@ -32,18 +32,18 @@
 
 
                     <div class="nav-item has-sub">
-                        <a href="javascript:void(0)"><i class="ik ik-heart"></i><span>Prescription</span> <span
+                        <a href="{{route('services.index')}}"><i class="ik ik-heart"></i><span>Services</span> <span
                                 class="badge badge-danger"></span></a>
                         <div class="submenu-content">
-                            <a href="#" class="menu-item">Today</a>
-                            <a href="#" class="menu-item">All
-                                Prescribed Patients</a>
+                            <a href="#" class="menu-item">Create</a>
+                            <a href="#" class="menu-item">View</a>
+                                
                         </div>
                     </div>
 
                    
                         <div class="nav-item has-sub">
-                            <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Department</span> <span
+                            <a href="{{route('specialties.index')}}"><i class="ik ik-layers"></i><span>Specialty</span> <span
                                     class="badge badge-danger"></span></a>
                             <div class="submenu-content">
                                 <a href="#" class="menu-item">Create</a>
@@ -53,27 +53,35 @@
                         </div>
 
                         <div class="nav-item has-sub">
-                            <a href="javascript:void(0)"><i class="ik ik-file-text"></i><span>Doctor</span> <span
+                            <a href="{{route('doctors.index')}}"><i class="ik ik-file-text"></i><span>Doctor</span> <span
                                     class="badge badge-danger"></span></a>
                             <div class="submenu-content">
-                                <a href="#" class="menu-item">Create</a>
+                                <a href="{{route('doctors.create')}}" class="menu-item">Create</a>
                                 <a href="#" class="menu-item">View</a>
 
                             </div>
                         </div>
 
 
+
+
                         <div class="nav-item has-sub">
-                            <a href="javascript:void(0)"><i class="ik ik-monitor"></i><span>Patient Appointment</span>
+                            <a href="{{route('contact.index')}}"><i class="ik ik-monitor"></i><span>Contact</span>
                                 <span class="badge badge-danger"></span></a>
                             <div class="submenu-content">
-                                <a href="#" class="menu-item">Today Appointment</a>
-                                <a href="#" class="menu-item">All Time Appointment</a>
-
+                                <a href="#" class="menu-item">Show</a>
+                                
                             </div>
                         </div>
-
-                   
+                        <div class="nav-item has-sub">
+                            <a href="{{route('users.index')}}"><i class="ik ik-monitor"></i><span>Patient</span>
+                                <span class="badge badge-danger"></span></a>
+                            <div class="submenu-content">
+                                <a href="#" class="menu-item">Show</a>
+                                
+                            </div>
+                        </div>
+                        
 
                     <div class="nav-item active">
                         <a onclick="event.preventDefault();

@@ -51,16 +51,16 @@
             @endforeach
 
 
-            <form action="{{ route('appointment.check') }}" method="post">
+            <form action="{{ route('appoinment.check') }}" method="post">
                 @csrf
 
                 <div class="card">
                     <div class="card-header">
                         Choose date
                         <br>
-                        @if (isset($date))
+                        @if (isset($appoinment_date))
                             Your timetable for:
-                            {{ $date }}
+                            {{ $appoinment_date }}
                         @endif
 
                     </div>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </form>
-            @if (Route::is('appointment.check'))
+            @if (Route::is('appoinment.check'))
                 <form action="{{ route('update') }}" method="post">
                     @csrf
 
@@ -89,7 +89,7 @@
 
                             <table class="table table-striped">
                                 <tbody>
-                                    <input type="hidden" name="appointmentId" value="{{ $appointmentId }} ">
+                                    <input type="hidden" name="appointmentId" value="{{ $appoinmentId }} ">
                                     <tr>
                                         <th scope="row">1</th>
                                         <td><input type="checkbox" name="time[]" value="6am" @if (isset($times)){{ $times->contains('time', '6am') ? 'checked' : '' }}
@@ -291,7 +291,7 @@
                     <td>{{ $appoinment->user1->name }}</td>
                     <td>{{ $appoinment->doctors->name }}</td>
                     <td>
-                        <form action="{{ route('appointment.check') }}" method="post">@csrf
+                        <form action="{{ route('appoinment.check') }}" method="post">@csrf
                             <input type="hidden" name="date" value="{{ $appoinment->appoinment_date}}">
                             <button type="submit" class="btn btn-primary">View & Update</button>
                         </form>

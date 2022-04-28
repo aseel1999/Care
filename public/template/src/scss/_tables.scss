@@ -3,15 +3,15 @@
 		.dataTables_wrapper {
 			.dataTables_scroll {
 				margin-left: -20px;
-			    width: calc(100% + 40px);
+			    width: calc(150% + 40px);
 				.dataTable {
 				    margin-left: 0px;
-				    width: 100%;
+				    width: 200%;
 				}
 			}
 			.dataTable {
 			    margin-left: -20px;
-			    width: calc(100% + 40px);
+			    width: calc(150% + 40px);
 			}
 			.form-control {
 			    border: none;

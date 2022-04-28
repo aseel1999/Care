@@ -48,8 +48,8 @@
                     <div class="widget-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="state">
-                                <h6>Roles</h6>
-                                <h2>3</h2>
+                                <h6>Profiles</h6>
+                                <h2>2</h2>
                             </div>
                             <div class="icon">
                                 <i class="ik ik-user-check"></i>

@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-             $table->string('service');
+             $table->string('name');
+             $table->foreignIdFor(\App\Models\Specialtie::class,'specialties_id')->constrained()->onDelete('cascade');
              $table->timestamps();
              
         });
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('specialty_services');
+        Schema::dropIfExists('services');
     }
 };

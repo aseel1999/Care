@@ -12,7 +12,7 @@ class Doctor extends Model
     use HasFactory;
 
     public function users(){
-        return $this->belongsToMany(User::class,'patient_doctor','doctor_id','user_id');
+        return $this->hasMany(User::class);
     }
     public function reviews()
     {

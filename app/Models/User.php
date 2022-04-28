@@ -42,9 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     public function doctors(){
-        return $this->belongsToMany(Doctor::class,'patient_doctor','user_id','doctor_id');
+        return $this->belongsTo(Doctor::class);
     }
     public function appoin(){
         return $this->belongsToMany(Appoinment::class);
+    }
+    public function revie(){
+        return $this->belongsToMany(Review::class);
     }
 }

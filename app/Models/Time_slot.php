@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Time_slot extends Model
 {
-    use HasFactory;
+    protected $guarded = [];
 }

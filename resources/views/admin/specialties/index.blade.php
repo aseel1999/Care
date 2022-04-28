@@ -8,7 +8,7 @@
                 <div class="page-header-title">
                     <i class="ik ik-inbox bg-blue"></i>
                     <div class="d-inline">
-                        <h5>specialty</h5>
+                        <h5>Specialty</h5>
                         <span>The List of All specialty</span>
                     </div>
                 </div>
@@ -49,6 +49,7 @@
                                 <th>id</th>
                                 <th>Name</th>
                                 <th>Image</th>
+                                <th>RelatedServices</th>
                                 <th class="nosort">&nbsp;</th>
                                 <th class="nosort">&nbsp;</th>
                             </tr>
@@ -60,6 +61,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{$specialty->specialty}}</td>
                                         <td><img src="profile/{{$specialty->image_path}}" width="80">
+                                        <td><a href="{{ route('services.index', ['specialty_id' => $specialty->id]) }}" class="btn btn-info btn-sm">Related_Services</a></td>
                                         <td>
                                             <div class="table-actions row">
                                                 <a href="{{ route('specialties.edit', [$specialty->id]) }}"><i

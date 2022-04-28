@@ -8,8 +8,8 @@
                 <div class="page-header-title">
                     <i class="ik ik-command bg-blue"></i>
                     <div class="d-inline">
-                        <h5>Specialty</h5>
-                        <span>Update Specialty for Doctor's Specialty</span>
+                        <h5>Service</h5>
+                        <span>UpdateA Service for Specialty</span>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                         <li class="breadcrumb-item">
                             <a href="../index.html"><i class="ik ik-home"></i></a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#">Speciaalty</a></li>
+                        <li class="breadcrumb-item"><a href="#">Service</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Update</li>
                     </ol>
                 </nav>
@@ -31,40 +31,40 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
-                    <h3>Update Specialty</h3>
+                    <h3>Update Service</h3>
                 </div>
                 <div class="card-body">
-                    <form class="forms-sample" action="{{ route('specialties.update', [$specialty->id]) }}" method="post">
+                    <form class="forms-sample" action="{{ route('services.update',$service->id) }}" method="post">
                         @csrf
                         @method('PUT')
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-
-                                    <label for="">Specialty name</label>
-                                    <input type="text" name="specialty"
-                                        class="form-control @error('specialty') is-invalid @enderror"
-                                        value="{{ $specialty->specialty }}">
-                                    @error('specialty')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                <label for="">Service Name</label>
+                            <input type="text" name="service"
+                                class="form-control @error('name') is-invalid @enderror"
+                                value="{{ $service->name }}">
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                                 </div>
                                 <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Image</label>
-                                    <input type="file"
-                                        class="form-control file-upload-info @error('image_path') is-invalid @enderror"
-                                        placeholder="Upload Image" name="image_path">
-                                    <span class="input-group-append">
-
-                                    </span>
-                                    @error('image_path')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                <label for="">Specialty </label>
+                        <select name="specialty_id" class="form-control @error('specialty->id') is-invalid @enderror">
+                            <option value="">Please select specialty</option>
+                            @foreach ($specialties as $specialty)
+                                    <option value="{{ $specialty->id }}" {{ old('specialty_id') == $specialty->id ? 'selected' : '' }}>
+                                        {{ $specialty->name }}</option>
+                                @endforeach
+                        </select>
+                        @error('specialty->id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                                 </div>
                             </div>
 

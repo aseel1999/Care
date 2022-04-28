@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->text('specialty');
             $table->string('image_path')->nullable();
-            $table->foreignIdFor(\App\Models\Service::class,'services_id')->constrained()->onDelete('cascade');
-          
             $table->timestamps();
             
         });

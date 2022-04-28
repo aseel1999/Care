@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Doctor;
-use App\Models\Specialtie;
 
-
-class DoctorsController extends Controller
+class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,21 +15,21 @@ class DoctorsController extends Controller
      */
     public function index(Request $request)
     {
-        $specialties = Specialtie::all();
-        $doctors = Doctor::when($request->search, function ($q) use ($request) {
-           
-            return $q->where('doctor_name', '%' . $request->search . '%');
+        $doctors= Doctor::all();
+        $users = User::when($request->search, function ($q) use ($request) {
 
-        })->when($request->specialty_id, function ($q) use ($request) {
+            return $q->where('name', '%' . $request->search . '%');
 
-            return $q->where('specialty_id', $request->specialty_id);
+        })->when($request->doctor_id, function ($q) use ($request) {
+
+            return $q->where('doctor_id', $request->doctor_id);
 
         })->latest()->paginate(5);
         
-       return view('admin.doctors.index', compact('doctors','specialties'));
-      
-       
-       
+        return view('admin.patients.index',[
+            'doctors'=>$doctors,
+            'users'=>$users
+        ]);
     }
 
     /**
@@ -41,7 +39,10 @@ class DoctorsController extends Controller
      */
     public function create()
     {
-        return view('admin.doctors.create');
+        $user= User::all();
+        $doctors=Doctor::all();
+        return view('admin.patients.create',compact('user','doctors'));
+        
     }
 
     /**
@@ -54,12 +55,12 @@ class DoctorsController extends Controller
     {
         $this->validateStore($request);
         $data = $request->all();
-        $name = (new Doctor)->userAvatar($request);
+        $name = (new User)->userAvatar($request);
 
         $data['image'] = $name;
         $data['password'] = bcrypt($request->password);
-        Doctor::create($data);
-        return redirect()->back()->with('message', 'Doctor added successfully');
+        User::create($data);
+        return redirect()->back()->with('message', 'Patient added successfully');
     }
 
     /**
@@ -70,8 +71,8 @@ class DoctorsController extends Controller
      */
     public function show($id)
     {
-        $doctor = Doctor::find($id);
-        return view('admin.doctors.delete', compact('doctor'));
+        $user = User::find($id);
+        return view('admin.patients.delete', compact('user'));
     }
 
     /**
@@ -80,11 +81,11 @@ class DoctorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Doctor $doctor)
+    public function edit($id)
     {
-       // $doctor = Doctor::findOrFail($id);
-       
-        return view('admin.doctors.edit', compact('doctor'));
+        $user = User::find($id);
+        $doctors=Doctor::all();
+        return view('admin.patients.edit', compact('user','doctors'));
     }
 
     /**
@@ -98,21 +99,21 @@ class DoctorsController extends Controller
     {
         $this->validateUpdate($request, $id);
         $data = $request->all();
-        $doctor = Doctor::find($id);
-        $imageName = $doctor->image;
-        $doctorPassword = $doctor->password;
+        $user = User::find($id);
+        $imageName = $user->image;
+        $userPassword = $user->password;
         if ($request->hasFile('image')) {
-            $imageName = (new Doctor)->userAvatar($request);
-            unlink(public_path('assets/' . $doctor->image));
+            $imageName = (new User)->userAvatar($request);
+            unlink(public_path('assets/' . $user->image));
         }
         $data['image'] = $imageName;
         if ($request->password) {
             $data['password'] = bcrypt($request->password);
         } else {
-            $data['password'] = $doctorPassword;
+            $data['password'] = $userPassword;
         }
-        $doctor->update($data);
-        return redirect()->route('doctors.index')->with('message', 'Doctor ' . $doctor->name . ' information updated successfully');
+        $user->update($data);
+        return redirect()->route('users.index')->with('message', 'Patient ' . $user->name . ' information updated successfully');
     }
 
     /**
@@ -130,15 +131,13 @@ class DoctorsController extends Controller
         return  $this->validate($request, [
             'name' => 'required',
             'email' => 'required|unique:users',
-            'password' => 'required|min:6|max:25',
-            'gender' => 'required',
-            'education' => 'required',
-            'address' => 'required',
-            'department' => 'required',
-            'phone_number' => 'required|numeric',
+            'phone' => 'required|numeric',
             'image' => 'mimes:jpeg,jpg,png',
-            
-            'description' => 'required'
+            'password' => 'required|min:6|max:25',
+            'date_of_birth' => 'required',
+            'blood_type'=>'required',
+            'patient-diseases'=>'required',
+            'patient_medicines'=>'required',
 
         ]);
     }
@@ -147,17 +146,15 @@ class DoctorsController extends Controller
         return  $this->validate($request, [
             'name' => 'required',
             'email' => 'required|unique:users,email,' . $id,
-
-            'gender' => 'required',
-            'education' => 'required',
-            'address' => 'required',
-            'department' => 'required',
-            'phone_number' => 'required|numeric',
+            'phone' => 'required|numeric',
             'image' => 'mimes:jpeg,jpg,png',
-            
-            'description' => 'required'
+            'password' => 'required|min:6|max:25',
+            'date_of_birth' => 'required',
+            'blood_type'=>'required',
+            'patient-diseases'=>'required',
+            'patient_medicines'=>'required',
 
+            
         ]);
     }
-    
 }
