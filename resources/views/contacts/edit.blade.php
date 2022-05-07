@@ -53,6 +53,11 @@
               <label for="name">message:</label>
               <input type="textarea" class="form-control" name="message" value={{ $contact->message }}>
           </div>
+          <div class="form-group">
+              @csrf
+              <label for="name">Response:</label>
+              <input type="textarea" class="form-control" name="response" >
+          </div>
           <button type="submit" class="btn btn-primary">Save & Close</button>
           <a href="/contact" class="btn btn-secondary">Cancel</a>
           <button type="reset" class="btn btn-tertiary">Restore Defaults</button>

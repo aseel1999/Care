@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appoinment;
-use App\Models\User;
+use App\Models\Doctor;
 use App\Models\Time_slot;
 
 class AppoinmentController extends Controller
 {
     public function index()
     {
-        $user=User::all();
+        $doctors=Doctor::all();
         $myAppoinments = Appoinment::latest()->get();
-        return view('admin.appoinments.index', compact('user','myAppoinments'));
+        return view('admin.appoinments.index', compact('doctors','myAppoinments'));
     }
 
     public function check(Request $request)
@@ -28,14 +28,14 @@ class AppoinmentController extends Controller
         $times = Time_slot::where('appoinment_id', $appoinmentId)->get();
         return view('admin.appoinments.index', compact('times', 'appoinmentId', 'appoinment_date'));
     }
-    // Update app time
-    // delete the old time array and create a new time array
-    public function updateTime(Request $request)
+   
+public function edit(Appoinment $appoinments){
+       
+       return view('admin.appoinments.edit',compact('appoinments'));
+
+}
+public function update(Request $request, $id)
     {
-        $appoinmentId = $request->appoinmentId;
-        $date = Appoinment::where('id', $appoinmentId)->get('appoinment_date')->first();
-        Time_slot::where('appoinment_id', $appoinmentId)->delete();
-        
-        return redirect()->route('appoinment.index')->with('message', 'Appointment time for ' . $date . ' is updated successfully!');
+        $appoinments = Appoinment::find($id);
 }
 }

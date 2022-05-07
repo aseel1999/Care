@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('appoinments', function (Blueprint $table) {
             $table->id();
+            $table->enum('appoinment_status',[
+                'approved','pending'
+            ]);
             $table->date('appoinment_date');
+            $table->time('appoinment_time');
             $table->foreignIdFor(\App\Models\User::class,'user_id')->constrained()->onDelete('cascade');
             $table->foreignIdFor(\App\Models\Doctor::class,'doctor_id')->constrained()->onDelete('cascade');
             $table->timestamps();

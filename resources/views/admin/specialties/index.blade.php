@@ -42,6 +42,12 @@
                     <h3>All specialty</h3>
 
                 </div>
+                <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                    <a href="{{ route('specialties.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add</a>
+                                    
+                                
+                            </div>
                 <div class="card-body">
                     <table id="data_table" class="table">
                         <thead>

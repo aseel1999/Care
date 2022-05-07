@@ -12,7 +12,7 @@ class ContactController extends Controller
     $contacts =Contact::all();
     return view('contacts.index', compact('contacts'));
 }
-public function edit($id)
+public function response($id)
     {
         $contact = Contact::find($id);
         return view('contacts.edit', compact('contact'));

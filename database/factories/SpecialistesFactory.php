@@ -28,10 +28,6 @@ class SpecialistesFactory extends Factory
         //$status=['active','draft'];
         //'status'=>$status[rand(0,1)],
 
-       $specialistes= DB::table('specialistes')->inRandomOrder()->limit(1)->first(['id']);
-        $name=$this->faker->words(2,true);
-        return [
-           'name'=>$name,
-        ];
+       
     }
 }

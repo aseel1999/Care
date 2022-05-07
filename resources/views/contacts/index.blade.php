@@ -64,7 +64,12 @@
                                         <td>{{$contact->from}}</td>
                                         <td>{{$contact->email}}</td>
                                         <td>{{$contact->message}}</td>
-                                        <td><a href="{{ route('contact.edit',$contact->id)}}" class="btn btn-primary">Edit</a></td>
+                                        <td><form action="{{ route('contact.response', $contact->id)}}" method="post">
+                                               @csrf
+                                             @method('POST')
+                                             <a href="{{ route('contact.response', $contact->id) }}"><i
+                                                        class="btn btn-warning ik ik-edit-2">Response</i></a>
+                                             </form></td>
                                         <td>
                                              <form action="{{ route('contact.destroy', $contact->id)}}" method="post">
                                                @csrf

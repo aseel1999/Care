@@ -44,134 +44,6 @@
                     enctype="multipart/form-data">@csrf
                     @method('PUT')
                     <div class="row">
-                        <div class="col-lg-6">
-                            <label for="">Full name</label>
-                            <input type="text" name="name" class="form-control @error('doctor_name') is-invalid @enderror"
-                                value="{{ $doctor->doctor_name }}">
-                            @error('doctor_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="">Phone</label>
-                            <input type="phone" name="phone" class="form-control @error('doctor_phone') is-invalid @enderror"
-                                value="{{ $doctor->doctor_phone }}">
-                            @error('doctor_phone')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="col-lg-6">
-                            <label for="">Email</label>
-                            <input type="email" name="email" class="form-control @error('doctor_emai') is-invalid @enderror"
-                                value="{{ $doctor->doctor_email }}">
-                            @error('doctor_email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Image</label>
-                                <input type="file" name="image_path"
-                                    class="form-control file-upload-info @error('image_path') is-invalid @enderror"
-                                    placeholder="Upload Image" name="image_path">
-                                <span class="input-group-append">
-                                </span>
-                                @error('image_path')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="">Gender</label>
-                                <select class="form-control @error('doctor_gender') is-invalid @enderror" name="gender">
-                                    
-                                </select>
-                                @error('gender')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <label for="">Experience</label>
-                                <input type="number" name="experience"
-                                    class="form-control @error('doctor_experience') is-invalid @enderror"
-                                    placeholder="Doctor'sExperience Number" value="{{ $doctor->doctor_experience }}">
-                                @error('experience')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="">BookingPrice</label>
-                                <input type="number" name="bookingPrice"
-                                    class="form-control @error('booking_price') is-invalid @enderror"
-                                    placeholder="Doctor'sbookingPrice" value="{{ $doctor->booking_price }}">
-                                @error('booking_price')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Clinic Name</label>
-                                    <input type="text" name="clinic_name"
-                                        class="form-control @error('clinic_name') is-invalid @enderror"
-                                        value="{{ $doctor->clinic_name }}">
-                                    @error('clinic_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Clinic Location</label>
-                                    <input type="text" name="clinic_location"
-                                        class="form-control @error('clinic_location') is-invalid @enderror"
-                                        value="{{ $doctor->clinic_location }}">
-                                    @error('clinic_location')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">ClinicPhone</label>
-                                    <input type="text" name="clinic_phone"
-                                        class="form-control @error('clinic_phone') is-invalid @enderror"
-                                        value="{{ $doctor->clinic_phone }}">
-                                    @error('clinic_phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <label>Specialty</label>
                                 <input type="text" name="specialty"
@@ -184,6 +56,21 @@
                                     @enderror
                                 
                             </div>
+                            <div class="col-md-6">
+                                <label>Status</label>
+                                <select class="form-control @error('status') is-invalid @enderror" name="blood_type">
+                                    <option value="">select</option>
+                                    <option value="approved">approved</option>
+                                    <option value="pending">pending</option>
+                                    </select>
+                                    @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                
+                            </div>
+
                         </div>
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                         <button class="btn btn-light">Cancel</button>

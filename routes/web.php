@@ -44,9 +44,10 @@ Route::prefix('/dashboard')->middleware('auth:admin')->group(function () {
     Route::get('/all-patients', '\App\Http\Controllers\PatientListController@allTimeAppointment')->name('all.appointments');
     Route::resource('appoinment', '\App\Http\Controllers\AppoinmentController');
     Route::post('/appoinment/check', '\App\Http\Controllers\AppoinmentController@check')->name('appoinment.check');
-    Route::post('/appoinment/update', '\App\Http\Controllers\AppoinmentController@updateTime')->name('update');
+    
     Route::get('/user-profile/{id}', '\App\Http\Controllers\ProfileController@index')->name('profile');
     Route::post('/prof', '\App\Http\Controllers\ProfileController@store')->name('profile.store');
+    Route::get('/contacts/{id}', '\App\Http\Controllers\ContactController@response')->name('contact.response');
     Route::post('/profile-pic', '\App\Http\Controllers\ProfileController@profilePic')->name('profile.pic');
     Route::resource('/contact', '\App\Http\Controllers\ContactController');
     Route::get('/review', '\App\Http\Controllers\ReviewController@index');
