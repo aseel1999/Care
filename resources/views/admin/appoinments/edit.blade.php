@@ -34,24 +34,21 @@
                 <h3>Update an Appoinment</h3>
             </div>
             <div class="card-body">
-                <form class="forms-sample" action="{{ route('appoinment.update',$appoinments->id) }}" method="post"
+                <form class="forms-sample" action="{{ route('appoinment.update',$appoinments) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">status </label>
-                                <select name="appoinment_status"
-                                    class="form-control @error('appoinment_status') is-invalid @enderror">
-                                    <option value="">Please select appoinment_status</option>
-                                    @foreach ($appoinments as $appoinment)
-                                    <option value="{{ $appoinment->appoinment_status }}"
-                                        {{ old('appoinment_status') == $appoinment->appoinment_status ? 'selected' : '' }}>
-                                        {{ $appoinment->appoinment_status }}</option>
+                            <label for="">Status</label>
+                            <select class="form-control @error('blood_type') is-invalid @enderror" name="appoinment_status">
+                            @foreach (['pending','approved'] as $appoinment_status)
+                                        <option value="{{ $appoinment_status }}" @if ($appoinment->appoinment_status == $appoinment_status)selected
+                                    @endif>{{ $appoinment_status }}</option>
                                     @endforeach
-                                </select>
-                                @error('appoinment->appoinment_status')
+                                    </select>
+                                @error('appoinment_status')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

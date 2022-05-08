@@ -43,7 +43,7 @@
 
                 </div>
                 <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                
                                     <a href="{{ route('specialties.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add</a>
                                     
                                 
@@ -56,7 +56,7 @@
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th>RelatedServices</th>
-                                <th class="nosort">&nbsp;</th>
+                                <th>Action</th>
                                 <th class="nosort">&nbsp;</th>
                             </tr>
                         </thead>

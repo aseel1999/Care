@@ -50,7 +50,7 @@
                                     <option value="">All Doctor</option>
                                     @foreach ($doctors as $doctor)
                                       {{$doctor}}
-                                        <option value="" >{{ $doctor->name }}</option>
+                                        <option value="" >{{ $doctor->doctor_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -102,9 +102,7 @@
                                                 <a href="{{ route('users.edit', $user->id) }}"><i
                                                         class="btn btn-warning ik ik-edit-2"></i></a>
 
-                                                <a href="{{ route('users.show', $user->id) }}">
-                                                    <i class="btn btn-danger ik ik-trash-2"></i>
-                                                </a>
+                                               
 
                                             </div>
                                         </td>

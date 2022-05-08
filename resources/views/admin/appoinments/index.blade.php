@@ -83,10 +83,13 @@
                     @foreach ($doctors as $doctor)
                     {{ $doctor}}
                     <option value="{{ $doctor->id }}" {{ request()->doctor_id == $doctor->id ? 'selected' : '' }}>
-                        {{ $doctor->name}}</option>
+                        {{ $doctor->doctor_name}}</option>
                     @endforeach
                 </select>
             </div>
+            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                    </div>
         </div>
         @if (Route::is('appoinment.check'))
         <form action="{{ route('update') }}" method="post">
@@ -102,6 +105,7 @@
                     <th scope="col">Time</th>
                     <th scope="col">User</th>
                     <th scope="col">Doctor</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Action</th>
 
                 </tr>
@@ -113,8 +117,8 @@
                     <td>{{ $appoinment->appoinment_date }}</td>
                     <td>{{ $appoinment->appoinment_time }}</td>
                     <td>{{ $appoinment->user1->name }}</td>
-                    <td>{{ @$appoinment->doctors->name }}</td>
-                    <td>{{ @$appoinment->doctors->name }}</td>
+                    <td>{{ $appoinment->doctors->doctor_name }}</td>
+                    <td>{{ $appoinment->appoinment_status }}</td>
                     <td> <a href="{{ route('appoinment.edit', $appoinment->id) }}"><i
                                                         class="btn btn-warning ik ik-edit-2"></i></a></td>
                 </tr>

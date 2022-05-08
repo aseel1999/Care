@@ -182,18 +182,13 @@
 
             <div class="col-md-6">
                 <label>Doctor</label>
-                <select name="doctor_id" class="form-control @error('doctor_id') is-invalid @enderror">
+                <select name="doctor" class="form-control">
                 <option value="">Please select a doctor</option>
-                @foreach ($doctors as $doctor)
-                                    <option value="{{ $doctor->id }}" {{ old('doctor_id') == $doctor->id ? 'selected' : '' }}>
-                                        {{ $doctor->name }}</option>
-                                @endforeach
+                   @foreach ($doctors as $doctoor)
+                   <option value="{{$doctoor->id}}">{{$doctoor->name}}</option>
+                   @endforeach
                 </select>
-                @error('doctor_id')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                
             </div>
         </div>
         <button type="submit" class="btn btn-primary mr-2">Submit</button>

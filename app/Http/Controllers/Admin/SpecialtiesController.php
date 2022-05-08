@@ -40,10 +40,13 @@ class SpecialtiesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'specialty' => 'required'
+            'specialty' => 'required',
+            'image_path' => 'required'
         ]);
         $specialties = Specialtie::create($request->all());
-        return  redirect()->back()->with('message', 'Specialtie ' . $specialty->specialty . ' was created!');
+        session()->flash('success', 'New Department Added Successfully.');
+        
+        return redirect(route('specialties.index'));
     }
 
     /**
@@ -79,12 +82,15 @@ class SpecialtiesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'specialty' => 'required'
+            'specialty' => 'required',
+            'image_path'=> 'required'
         ]);
         $specialty = Specialtie::find($id);
         $specialty->specialty = $request->specialty;
         $specialty->save();
-        return redirect()->route('specialty.index')->with('message', 'Specialty was updated');
+        session()->flash('success', ' Specialty updated Successfully.');
+        // redirect user
+        return redirect(route('specialties.index'));
     }
 
     /**
@@ -97,7 +103,9 @@ class SpecialtiesController extends Controller
     {
         $specialty = Specialtie::find($id);
         $specialty->delete();
-        return redirect()->back()->with('message', 'specialty ' . $specialty->specialty . ' was deleted!');
+        session()->flash('success', ' Specialty Deleted Successfully.');
+        // redirect user
+        return redirect(route('specialties.index'));
         
     }
 }

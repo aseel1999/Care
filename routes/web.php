@@ -48,12 +48,11 @@ Route::prefix('/dashboard')->middleware('auth:admin')->group(function () {
     Route::get('/user-profile/{id}', '\App\Http\Controllers\ProfileController@index')->name('profile');
     Route::post('/prof', '\App\Http\Controllers\ProfileController@store')->name('profile.store');
     Route::get('/contacts/{id}', '\App\Http\Controllers\ContactController@response')->name('contact.response');
-    Route::post('/profile-pic', '\App\Http\Controllers\ProfileController@profilePic')->name('profile.pic');
+    
     Route::resource('/contact', '\App\Http\Controllers\ContactController');
+    Route::post('/contac-us', '\App\Http\Controllers\ContactController@sendEmail')->name('contact.us');
     Route::get('/review', '\App\Http\Controllers\ReviewController@index');
     
-
-
 
 });
 

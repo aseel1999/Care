@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Mail\ContactMail;
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use Mail;
 
 class ContactController extends Controller
 {
@@ -12,11 +13,16 @@ class ContactController extends Controller
     $contacts =Contact::all();
     return view('contacts.index', compact('contacts'));
 }
-public function response($id)
-    {
-        $contact = Contact::find($id);
-        return view('contacts.edit', compact('contact'));
-    }
+public function sendEmail(Request $request){
+    $details=[
+        'from'=>$request->from,
+        'email'=>$request->email,
+        'message'=>$request->message,
+
+    ];
+   Mail::to('aseelmaysoum@gmail.com')->send(new ContactMail($details));
+   return back()-with('message_sent','Your Message has been sent successfuly');
+}
 
     /**
      * Update the specified resource in storage.

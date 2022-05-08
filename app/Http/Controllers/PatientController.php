@@ -60,7 +60,9 @@ class PatientController extends Controller
         $data['image'] = $name;
         $data['password'] = bcrypt($request->password);
         User::create($data);
-        return redirect()->back()->with('message', 'Patient added successfully');
+        session()->flash('success', 'New Patient Added Successfully.');
+        
+        return redirect(route('users.index'));
     }
 
     /**
@@ -72,7 +74,7 @@ class PatientController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('admin.patients.delete', compact('user'));
+        return view('admin.patients.index', compact('user'));
     }
 
     /**
@@ -86,6 +88,7 @@ class PatientController extends Controller
         $user = User::find($id);
         $doctors=Doctor::all();
         return view('admin.patients.edit', compact('user','doctors'));
+
     }
 
     /**
@@ -113,7 +116,9 @@ class PatientController extends Controller
             $data['password'] = $userPassword;
         }
         $user->update($data);
-        return redirect()->route('users.index')->with('message', 'Patient ' . $user->name . ' information updated successfully');
+        session()->flash('success', 'New Patient Updated Successfully.');
+        
+        return redirect(route('users.index'));
     }
 
     /**
@@ -130,10 +135,10 @@ class PatientController extends Controller
     {
         return  $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|unique:users',
+            'email' => 'required|unique',
             'phone' => 'required|numeric',
             'image' => 'mimes:jpeg,jpg,png',
-            'password' => 'required|min:6|max:25',
+            
             'date_of_birth' => 'required',
             'blood_type'=>'required',
             'patient-diseases'=>'required',
@@ -148,7 +153,7 @@ class PatientController extends Controller
             'email' => 'required|unique:users,email,' . $id,
             'phone' => 'required|numeric',
             'image' => 'mimes:jpeg,jpg,png',
-            'password' => 'required|min:6|max:25',
+            
             'date_of_birth' => 'required',
             'blood_type'=>'required',
             'patient-diseases'=>'required',

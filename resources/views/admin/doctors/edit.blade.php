@@ -58,10 +58,11 @@
                             </div>
                             <div class="col-md-6">
                                 <label>Status</label>
-                                <select class="form-control @error('status') is-invalid @enderror" name="blood_type">
-                                    <option value="">select</option>
-                                    <option value="approved">approved</option>
-                                    <option value="pending">pending</option>
+                                <select class="form-control @error('blood_type') is-invalid @enderror" name="status">
+                                    @foreach (['add','cancel'] as $status)
+                                        <option value="{{ $status }}" @if ($doctor->status == $status)selected
+                                    @endif>{{ $status }}</option>
+                                    @endforeach
                                     </select>
                                     @error('status')
                                     <span class="invalid-feedback" role="alert">

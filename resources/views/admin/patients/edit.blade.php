@@ -40,7 +40,7 @@
                 <h3>Edit patient</h3>
             </div>
             <div class="card-body">
-                <form class="forms-sample" action="{{ route('users.store') }}" method="post"
+                <form class="forms-sample" action="{{ route('users.update',$user->id) }}" method="post"
                     enctype="multipart/form-data">@csrf
                     @method('PUT')
                     <div class="row">
@@ -105,16 +105,13 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <label for="">blood_type</label>
+                        <label for="">Blood_type</label>
                             <select class="form-control @error('blood_type') is-invalid @enderror" name="blood_type">
-                                    <option value="">select</option>
-                                    <option value="O+">O+</option>
-                                    <option value="O-">O-</option>
-                                    <option value="A+">A+</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
-                                    <option value="B">B</option>
-                                </select>
+                            @foreach (['A+', 'AB+','B','AB-','O-','O+'] as $blood_type)
+                                        <option value="{{ $blood_type }}" @if ($user->blood_type == $blood_type)selected
+                                    @endif>{{ $blood_type }}</option>
+                                    @endforeach
+                                    </select>
                             @error('blood_type')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -127,7 +124,7 @@
                         <div class="col-lg-6">
                             <label for="">Date_of_birth</label>
                             <input type="text" name="date_of_birth"
-                                class="form-control @error('date_of_Birth') is-invalid @enderror"
+                                class="form-control @error('date_of_birth') is-invalid @enderror"
                                 value="{{ $user->date_of_birth }}">
                             @error('date_of_birth')
                             <span class="invalid-feedback" role="alert">
@@ -137,11 +134,12 @@
                         </div>
                         <div class="col-lg-6">
                             <label for="">Social_status</label>
-                            <select class="form-control @error('social_status') is-invalid @enderror" name="blood_type">
-                                    <option value="">select</option>
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
-                                </select>
+                            <select class="form-control @error('social_status') is-invalid @enderror" name="social_status">
+                            @foreach (['Single', 'Married'] as $social_status)
+                                        <option value="{{ $social_status }}" @if ($user->social_status == $social_status)selected
+                                    @endif>{{ $social_status }}</option>
+                                    @endforeach
+                                    </select>
                             @error('social_status')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -181,12 +179,12 @@
 
             <div class="col-md-6">
                 <label>Doctor</label>
-                <select name="doctor_id" class="form-control @error('specialty_id') is-invalid @enderror">
+                <select name="doctor_id" class="form-control @error('doctor_id') is-invalid @enderror">
                 <option value="">Please select a doctor</option>
-                @foreach ($doctors as $doctor)
-                                    <option value="{{ $doctor->id }}" {{ old('doctor_id') == $doctor->id ? 'selected' : '' }}>
-                                        {{ $doctor->name }}</option>
-                                @endforeach
+                            @foreach ($doctors as $doctor)
+                                    <option value="{{ $doctor->id }}"{{ $user->doctor_id == $doctor->id ? 'selected' :''  }} >
+                                        {{ $doctor->doctor_name }}</option>
+                            @endforeach
                     
                 </select>
                 @error('doctor_id')

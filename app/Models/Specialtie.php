@@ -16,8 +16,11 @@ class Specialtie extends Model
     public function services(){
         return $this->hasMany(Service::class);
     }
-    public function doct(){
-        return $this->belongsTo(Doctor::class);
+    public function doctors(){
+        return $this->belongsToMany(Doctor::class);
+    }
+    public function appointments(){
+        return $this->hasMany(Appointment::class);
     }
     
 

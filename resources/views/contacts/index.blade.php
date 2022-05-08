@@ -2,93 +2,72 @@
 
 @section('content')
 
-    <div class="page-header">
-        <div class="row ">
-            <div class="col-lg-8">
-                <div class="page-header-title">
-                    <i class="ik ik-inbox bg-blue"></i>
-                    <div class="d-inline">
-                        <h5>Contact</h5>
-                        <span>The List of All contact</span>
-                    </div>
+<div class="page-header">
+    <div class="row ">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="ik ik-inbox bg-blue"></i>
+                <div class="d-inline">
+                    <h5>Contact</h5>
+                    <span>The List of All contact</span>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <nav class="breadcrumb-container" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="../index.html"><i class="ik ik-home"></i></a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="#">Contact</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Index</li>
-                    </ol>
-                </nav>
-            </div>
+        </div>
+        <div class="col-lg-4">
+            <nav class="breadcrumb-container" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="../index.html"><i class="ik ik-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Contact</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Index</li>
+                </ol>
+            </nav>
         </div>
     </div>
+</div>
 
 
-    <div class="row justify-content-center">
-        <div class="col-md-8 ">
-            @if (Session::has('message'))
+<div class="row justify-content-center">
+    <div class="col-md-8 ">
+
+        <div class="card">
+            <div class="card-header">
+                <h3>All Contacts</h3>
+
+            </div>
+            <div class="card-body">
+                @if (Session::has('message_sent'))
                 <div class="alert bg-success alert-success text-white" role="alert">
-                    {{ Session::get('message') }}
+                    {{ Session::get('message_sent') }}
                 </div>
-            @endif
-            <div class="card">
-                <div class="card-header">
-                    <h3>All Contacts</h3>
-
-                </div>
-                <div class="card-body">
-                    <table id="data_table" class="table">
-                        <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>from</th>
-                                <th>Email</th>
-                                <th>Message</th>
-                                <th colspan="2">Actions</th>
-
-                                <th class="nosort">&nbsp;</th>
-                                <th class="nosort">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (count($contacts) > 0)
-                                @foreach ($contacts as $key => $contact)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{$contact->from}}</td>
-                                        <td>{{$contact->email}}</td>
-                                        <td>{{$contact->message}}</td>
-                                        <td><form action="{{ route('contact.response', $contact->id)}}" method="post">
-                                               @csrf
-                                             @method('POST')
-                                             <a href="{{ route('contact.response', $contact->id) }}"><i
-                                                        class="btn btn-warning ik ik-edit-2">Response</i></a>
-                                             </form></td>
-                                        <td>
-                                             <form action="{{ route('contact.destroy', $contact->id)}}" method="post">
-                                               @csrf
-                                             @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                             </form>
-                                        </td>
-                                        
-                                    </tr>
-                                @endforeach
-
-                            @else
-                                <td>No Contacts. Please create one.</td>
-                            @endif
-
-                        </tbody>
-                    </table>
-                </div>
+                @endif
             </div>
+            <form class="forms-sample" action="{{ route('contact.us') }}" method="post">
+                @csrf
+                <div class="form-group">
+
+                    <label for="title">from:</label>
+                    <input type="text" name="from" class="form-control" name="title" >
+                </div>
+
+                <div class="form-group">
+
+                    <label for="title">email:</label>
+                    <input type="text" name="email" class="form-control" name="title"  >
+                </div>
+                <div class="form-group">
+
+                    <label for="title">message:</label>
+                    <input type="textarea" name="message" class="form-control" name="title" >
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save & Close</button>
+
+            </form>
         </div>
     </div>
+</div>
 @endsection

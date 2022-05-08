@@ -10,10 +10,10 @@ class Appoinment extends Model
     use HasFactory;
 
     
-    public function User1(){
+    public function user1(){
         return $this->belongsTo(User::class,'user_id','id');
     }
-    public function Doctors()
+    public function doctors()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id', 'id');
     }

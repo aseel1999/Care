@@ -45,7 +45,7 @@ class User extends Authenticatable
         return $this->belongsTo(Doctor::class);
     }
     public function appoin(){
-        return $this->belongsToMany(Appoinment::class);
+        return $this->hasMany(Appoinment::class);
     }
     public function revie(){
         return $this->belongsToMany(Review::class);

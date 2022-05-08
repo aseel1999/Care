@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Http\Requests\Doctor\CreateDoctorRequest;
+use App\Http\Requests\Doctor\UpdateDoctorRequest;
 use App\Models\Specialtie;
+use Illuminate\Support\Facades\Storage;
 
 
 class DoctorsController extends Controller
@@ -50,16 +53,31 @@ class DoctorsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateDoctorRequest $request)
     {
-        $this->validateStore($request);
-        $data = $request->all();
-        $name = (new Doctor)->userAvatar($request);
-
-        $data['image'] = $name;
-        $data['password'] = bcrypt($request->password);
-        Doctor::create($data);
-        return redirect()->back()->with('message', 'Doctor added successfully');
+        $doctor = Doctor::create([
+            'doctor_name' => $request->doctor_name,
+            'doctor_phone' => $request->doctor_phone,
+            'doctor_email' => $request->doctor_email,
+            'doctor_password' => $request->doctor_password,
+            'doctor_gender' => $request->doctor_gender,
+            'doctor_experience' => $request->doctor_experience,
+            'doctor_qualifications' => $request->doctor_qualifications,
+            'doctor_certificates'=>$request->doctor_certificates,
+            'clinic_location'=>$request->clinic_location,
+            'clinic_phone'=>$request->clinic_phone,
+            'clinic_name'=>$request->clinic_name,
+            'booking_price'=> $request->booking_price,
+            
+        ]);
+        if($request->image_path){
+            $pic = $request->image_path->store('doctors_pictures');
+            $doctor->image_path = $pic;
+            $doctor->save();
+        }
+        session()->flash('success', 'New Doctor Added Successfully.');
+        
+        return redirect(route('doctors.index'));
     }
 
     /**
@@ -94,25 +112,23 @@ class DoctorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
-        $this->validateUpdate($request, $id);
-        $data = $request->all();
-        $doctor = Doctor::find($id);
-        $imageName = $doctor->image;
-        $doctorPassword = $doctor->password;
-        if ($request->hasFile('image')) {
-            $imageName = (new Doctor)->userAvatar($request);
-            unlink(public_path('assets/' . $doctor->image));
-        }
-        $data['image'] = $imageName;
-        if ($request->password) {
-            $data['password'] = bcrypt($request->password);
-        } else {
-            $data['password'] = $doctorPassword;
+        $data = $request->only('doctor_name','doctor_phone','doctor_email','doctor_gender', 'doctor_experience', 'doctor_qualifications', 'doctor_certificates','clinic_location','clinic_phone', 'clinic_name', 'booking_price', 'mobile', 'emergency', 'medical_degree', 'specialist', 'biography', 'educational_qualification');
+        if ($request->hasFile('image_path')) {
+
+            $pic = $request->image_path->store('doctors_pictures');
+
+            Storage::delete($doctor->image_path);
+
+            $data['image_path'] = $pic;
         }
         $doctor->update($data);
-        return redirect()->route('doctors.index')->with('message', 'Doctor ' . $doctor->name . ' information updated successfully');
+        // flash message
+        session()->flash('success', 'Doctor Info Updated Successfully.');
+        // redirect user
+        return redirect(route('doctors.index'));
+        
     }
 
     /**
@@ -125,39 +141,6 @@ class DoctorsController extends Controller
     {
         //
     }
-    public function validateStore($request)
-    {
-        return  $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required|min:6|max:25',
-            'gender' => 'required',
-            'education' => 'required',
-            'address' => 'required',
-            'department' => 'required',
-            'phone_number' => 'required|numeric',
-            'image' => 'mimes:jpeg,jpg,png',
-            
-            'description' => 'required'
-
-        ]);
-    }
-    public function validateUpdate($request, $id)
-    {
-        return  $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|unique:users,email,' . $id,
-
-            'gender' => 'required',
-            'education' => 'required',
-            'address' => 'required',
-            'department' => 'required',
-            'phone_number' => 'required|numeric',
-            'image' => 'mimes:jpeg,jpg,png',
-            
-            'description' => 'required'
-
-        ]);
-    }
+    
     
 }

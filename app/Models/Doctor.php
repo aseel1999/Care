@@ -9,6 +9,22 @@ class Doctor extends Model
 {
     const STATUS_MALE='male';
     const STATUS_FEMALE='female';
+/**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+    ];
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
     use HasFactory;
 
     public function users(){

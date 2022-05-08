@@ -25,8 +25,7 @@ class AppoinmentController extends Controller
             return redirect()->to('/appoinment')->with('errMessage', 'Appointment time is not available for this date');
         }
         $appoinmentId = $appoinment->id;
-        $times = Time_slot::where('appoinment_id', $appoinmentId)->get();
-        return view('admin.appoinments.index', compact('times', 'appoinmentId', 'appoinment_date'));
+        return view('admin.appoinments.index', compact( 'appoinmentId', 'appoinment_date'));
     }
    
 public function edit(Appoinment $appoinments){
@@ -36,6 +35,16 @@ public function edit(Appoinment $appoinments){
 }
 public function update(Request $request, $id)
     {
-        $appoinments = Appoinment::find($id);
+        $this->validate($request, [
+            'appoinment_status' => 'required',
+        ]);
+        $appoinment = Appoinment::find($id);
+        $appoinment->save();
+        session()->flash('success', ' Appoinment updated Successfully.');
+        // redirect user
+        return redirect(route('appoinment.index'));
+        
 }
+
+
 }

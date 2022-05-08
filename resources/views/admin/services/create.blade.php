@@ -57,7 +57,7 @@
                         <select name="specialty_id" class="form-control @error('specialty_id') is-invalid @enderror">
                             <option value="">Please select specialty</option>
                             @foreach ($specialties as $specialty)
-                                    <option value="{{ $specialty->id }}" {{ old('specialty_id') == $specialty->id ? 'selected' : '' }}>
+                                    <option value="{{ $specialty->id }}" >
                                         {{ $specialty->specialty }}</option>
                                 @endforeach
                         </select>
