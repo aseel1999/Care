@@ -46,7 +46,7 @@
                     <div class="row">
                             <div class="col-md-6">
                                 <label>Specialty</label>
-                                <input type="text" name="specialty"
+                                <input type="text" name="specialty_id"
                                         class="form-control @error('specialty_id') is-invalid @enderror"
                                         value="{{ $doctor->specialty_id }}">
                                     @error('specialty_id')
@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label>Status</label>
-                                <select class="form-control @error('blood_type') is-invalid @enderror" name="status">
+                                <select class="form-control @error('status') is-invalid @enderror" name="status">
                                     @foreach (['add','cancel'] as $status)
                                         <option value="{{ $status }}" @if ($doctor->status == $status)selected
                                     @endif>{{ $status }}</option>

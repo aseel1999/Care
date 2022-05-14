@@ -112,18 +112,18 @@ class DoctorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDoctorRequest $request, Doctor $doctor)
+    public function update(Request $request,$id)
     {
-        $data = $request->only('doctor_name','doctor_phone','specialty_id','doctor_email','doctor_gender', 'doctor_experience', 'doctor_qualifications', 'doctor_certificates','clinic_location','clinic_phone', 'clinic_name', 'booking_price', 'mobile', 'emergency', 'medical_degree', 'specialist', 'biography', 'educational_qualification');
-        if ($request->hasFile('image_path')) {
+        $validate =  $request->validate([
+            'specialty_id' => 'required',
+            'status'=> 'required'
+        ]);
+        $doctor = Doctor::find($id);
 
-            $pic = $request->image_path->store('doctors_pictures');
-
-            Storage::delete($doctor->image_path);
-
-            $data['image_path'] = $pic;
-        }
-        $doctor->update($data);
+        // this name from db            this $request->service from input
+        $doctor->specialty_id = $request->specialty_id;
+        $doctor->status=$request->status;
+        $doctor->save();
         // flash message
         session()->flash('success', 'Doctor Info Updated Successfully.');
         // redirect user
