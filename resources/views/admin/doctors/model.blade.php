@@ -12,7 +12,7 @@
                 <p>Name: {{ $doctor->doctor_name }}</p>
                 <p>Phone number: {{$doctor->doctor_phone}}</p>
                 <p>Email: {{ $doctor->doctor_email }}</p>
-                <p><img src="{{ asset('assets/images/one.png') }}" class="table-user-thumb" alt="" width="200"></p>
+                <p><img src="{{ asset('assets/images/'.$doctor->image_path) }}" class="table-user-thumb" alt="" width="200"></p>
                 <p>Gender: {{ $doctor->doctor_gender }}</p>
                 <p>Experience:{{ $doctor->doctor_experience }}</p>
                 <p>Price:{{ $doctor->booking_price }}</p>

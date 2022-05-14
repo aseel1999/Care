@@ -11,12 +11,12 @@ class Review extends Model
     protected $guarded = [];
     public function uses()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function docts()
     {
-        return $this->belongsTo(Doctor::class);
+        return $this->belongsTo(Doctor::class,'doctor_id');
     }
     
 }

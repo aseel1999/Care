@@ -24,7 +24,7 @@ class DoctorsController extends Controller
     {
         $specialties = Specialtie::all();
         if($request->search){
-            $doctors = Doctor::where('doctor_name','=',$request->search)->where('specialty_id','=',$request->specialty_id)->latest()->paginate(5);
+            $doctors = Doctor::where('doctor_name','=',$request->search)->latest()->paginate(5);
             }else{
             $doctors = Doctor::OrderBy('created_at','desc')->paginate(5);
     

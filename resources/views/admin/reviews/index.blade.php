@@ -43,7 +43,7 @@
 
             </div>
             <div class="card-body">
-                <table id="data_table" class="table">
+                <table id="data_table" class="table table-responsive">
                     <thead>
                         <tr>
                             <th>ID</th>
