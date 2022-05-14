@@ -34,7 +34,7 @@
                 <h3>Update an Appoinment</h3>
             </div>
             <div class="card-body">
-                <form class="forms-sample" action="{{ route('appoinment.update',$appoinments) }}" method="post"
+                <form class="forms-sample" action="{{ route('appoinment.update',$appoinments->id) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')

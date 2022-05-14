@@ -16,15 +16,12 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $doctors= Doctor::all();
-        $users = User::when($request->search, function ($q) use ($request) {
-
-            return $q->where('name', '%' . $request->search . '%');
-
-        })->when($request->doctor_id, function ($q) use ($request) {
-
-            return $q->where('doctor_id', $request->doctor_id);
-
-        })->latest()->paginate(5);
+        if($request->search){
+            $users = User::where('name','=',$request->search)->latest()->paginate(5);
+            }else{
+            $users = User::OrderBy('created_at','desc')->paginate(5);
+    
+            }
         
         return view('admin.patients.index',[
             'doctors'=>$doctors,
@@ -107,7 +104,7 @@ class PatientController extends Controller
         $userPassword = $user->password;
         if ($request->hasFile('image')) {
             $imageName = (new User)->userAvatar($request);
-            unlink(public_path('assets/' . $user->image));
+            unlink(public_path('assets/images/' . $user->image));
         }
         $data['image'] = $imageName;
         if ($request->password) {

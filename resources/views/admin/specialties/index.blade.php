@@ -42,12 +42,22 @@
                     <h3>All specialty</h3>
 
                 </div>
-                <div class="col-md-4">
-                                
-                                    <a href="{{ route('specialties.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add</a>
-                                    
-                                
-                            </div>
+                <form action="{{ route('specialties.index') }}" method="get">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
+                                value="{{ request()->search }}">
+                        </div>
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>
+                                Search</button>
+                            <a href="{{ route('specialties.create') }}" class="btn btn-primary"><i
+                                    class="fa fa-plus"></i> Add</a>
+                        </div>
+                    </div>
+                </form>
+
+                
                 <div class="card-body">
                     <table id="data_table" class="table">
                         <thead>
@@ -66,7 +76,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{$specialty->specialty}}</td>
-                                        <td><img src="profile/{{$specialty->image_path}}" width="80">
+                                        <td><img src="{{asset('assets/images/'.$specialty->image_path)}}" width="80">
                                         <td><a href="{{ route('services.index', ['specialty_id' => $specialty->id]) }}" class="btn btn-info btn-sm">Related_Services</a></td>
                                         <td>
                                             <div class="table-actions row">

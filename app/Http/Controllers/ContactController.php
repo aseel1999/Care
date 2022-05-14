@@ -20,8 +20,22 @@ public function sendEmail(Request $request){
         'message'=>$request->message,
 
     ];
-   Mail::to('aseelmaysoum@gmail.com')->send(new ContactMail($details));
-   return back()-with('message_sent','Your Message has been sent successfuly');
+    //dd($details);
+$aa = $request->email;
+   
+
+// Create the Transport
+// $transport = (new \Swift_SmtpTransport('smtp.mailtrap.io', 25))
+//   ->setUsername('aseelels99@gmail.com')
+//   ->setPassword('oezjxtjbpmqakudf')
+// ;
+        \Mail::to($request->email)->send(new ContactMail($details));
+    return back()->with('message_sent','Your Message has been sent successfuly');
+
+
+
+
+
 }
 
     /**

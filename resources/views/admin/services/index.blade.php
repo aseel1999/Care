@@ -31,7 +31,7 @@
 
 
 <div class="row justify-content-center">
-    <div class="col-md-8 ">
+    <div class="col-md-12 ">
         @if (Session::has('message'))
         <div class="alert bg-success alert-success text-white" role="alert">
             {{ Session::get('message') }}
@@ -56,14 +56,13 @@
                 </div>
             </form>
             <div class="card-body">
-                <table id="data_table" class="table">
+                <table id="data_table" class="table table-responsive">
                     <thead>
                         <tr>
                             <th>id</th>
                             <th>Name</th>
                             <th>Specialty</th>
-                            <th class="nosort">&nbsp;</th>
-                            <th class="nosort">&nbsp;</th>
+                            <th >Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,7 +71,7 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{$service->name}}</td>
-                            <td>{{@$service->specialtiess->name}}</td>
+                            <td>{{$service->specialtiess->specialty}}</td>
                             <td>
                                 <div class="table-actions row">
                                     <a href="{{ route('services.edit', [$service->id]) }}"><i

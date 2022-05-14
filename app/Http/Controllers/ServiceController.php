@@ -12,15 +12,12 @@ class ServiceController extends Controller
     {
         $specialties = Specialtie::all();
 
-        $services = Service::when($request->search, function ($q) use ($request) {
-
-            return $q->where('name', '%' . $request->search . '%');
-
-        })->when($request->specialties_id, function ($q) use ($request) {
-
-            return $q->where('specialties_id', $request->specialties_id);
-
-        })->latest()->paginate(5);
+        if($request->search){
+            $services = Service::where('name','=',$request->search)->latest()->paginate(5);
+            }else{
+            $services = Service::OrderBy('created_at','desc')->paginate(5);
+    
+            }
 
         return view('admin.services.index',compact('specialties','services'));
     }
@@ -31,12 +28,15 @@ class ServiceController extends Controller
     }
     public function store(Request $request)
     {
-        $this->validateStore($request);
-        $data = $request->all();
-        $name = (new Specialtie)->userAvatar($request);
-        $data['image'] = $name;
-        Service::create($data);
-        return redirect()->back()->with('message', 'Service added successfully');
+        $this->validate($request, [
+            'service' => 'required',
+            'specialty_id' => 'required'
+        ]);
+        $services = Service::create(['name'=>$request->service,'specialties_id'=>$request->specialty_id]);
+        session()->flash('success', 'New Service Added Successfully.');
+        
+        return redirect(route('services.index'));
+        
     }
     public function edit(Service $service)
     {
@@ -45,29 +45,22 @@ class ServiceController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $this->validateUpdate($request, $id);
-        $data = $request->all();
-        $service = Service::findOrFail($id);
-        $serviceName = $service->name;
-        $service->update($data);
-        return redirect()->route('services.index')->with('message', 'Service ' . $service->name. ' information updated successfully');
-    }
-    public function validateStore($request)
-    {
-        return  $this->validate($request, [
-            'name' => 'required',
-            'specialties_id'=>'required'
-
+       $validate =  $request->validate([
+            'service' => 'required',
+            'specialty_id'=> 'required'
         ]);
-    }
-    public function validateUpdate($request, $id)
-    {
-        return  $this->validate($request, [
-            'name' => 'required',
-            'specialties_id'=>'required'
+        $service = Service::find($id);
 
-        ]);
+        // this name from db            this $request->service from input
+        $service->name = $request->service;
+        $service->specialties_id=$request->specialty_id;
+        $service->save();
+        session()->flash('success', ' Service updated Successfully.');
+        // redirect user
+        return redirect(route('services.index'));
     }
+    
+    
 
     
 }

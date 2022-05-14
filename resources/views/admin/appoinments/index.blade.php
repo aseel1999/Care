@@ -50,6 +50,21 @@
 
         @endforeach
 
+        @if(\Session::has('success'))
+
+        <div class="alert alert-success">{{ \Session::get('success') }}</div>
+
+
+        @endif
+
+        @if(\Session::has('error'))
+
+        <div class="alert alert-danger">{{ \Session::get('error') }}</div>
+
+
+        @endif
+        
+
 
         <form action="{{ route('appoinment.check') }}" method="post">
             @csrf
@@ -72,31 +87,29 @@
                 </div>
             </div>
         </form>
-        <div class="row">
-            <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="search"
-                    value="{{ request()->search }}">
+        <form action="{{ route('appoinment.index') }}" method="GET">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" name="search" class="form-control" placeholder="search"
+                        value="{{ request()->search }}">
+                </div>
+                <div class="col-md-4">
+                    <select name="specialty_id" class="fospecialtiesrm-control">
+                        <option value="">All Doctor</option>
+                        @foreach ($doctors as $doctor)
+                        {{ $doctor}}
+                        <option value="{{ $doctor->id }}" {{ request()->doctor_id == $doctor->id ? 'selected' : '' }}>
+                            {{ $doctor->doctor_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                </div>
             </div>
-            <div class="col-md-4">
-                <select name="specialty_id" class="fospecialtiesrm-control">
-                    <option value="">All Doctor</option>
-                    @foreach ($doctors as $doctor)
-                    {{ $doctor}}
-                    <option value="{{ $doctor->id }}" {{ request()->doctor_id == $doctor->id ? 'selected' : '' }}>
-                        {{ $doctor->doctor_name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
-                    </div>
-        </div>
-        @if (Route::is('appoinment.check'))
-        <form action="{{ route('update') }}" method="post">
-            @csrf
         </form>
-        {{-- Show app list --}}
-        @else
+
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -106,11 +119,12 @@
                     <th scope="col">User</th>
                     <th scope="col">Doctor</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Action</th>
+                    
 
                 </tr>
             </thead>
             <tbody>
+                @if (count($myAppoinments) > 0)
                 @foreach ($myAppoinments as $appoinment)
                 <tr>
                     <td>{{ $loop->index + 1 }}</td>
@@ -119,14 +133,16 @@
                     <td>{{ $appoinment->user1->name }}</td>
                     <td>{{ $appoinment->doctors->doctor_name }}</td>
                     <td>{{ $appoinment->appoinment_status }}</td>
-                    <td> <a href="{{ route('appoinment.edit', $appoinment->id) }}"><i
-                                                        class="btn btn-warning ik ik-edit-2"></i></a></td>
+                    
                 </tr>
                 @endforeach
+                {{ $myAppoinments->appends(request()->query())->links() }}
             </tbody>
         </table>
-
+        @else
+        <h>No appoinment to display<h>
         @endif
+
     </div>
     <style type="text/css">
     input[type="checkbox"] {

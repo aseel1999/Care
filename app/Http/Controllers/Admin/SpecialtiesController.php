@@ -15,9 +15,12 @@ class SpecialtiesController extends Controller
      */
     public function index(Request $request)
     {
-        $specialties = Specialtie::when($request->search, function ($q) use ($request){
-            return $q->where('name',  '%' .$request->search .'%');
-        })->latest()->paginate(5);
+        if($request->search){
+            $specialties = Specialtie::where('specialty','=',$request->search)->latest()->paginate(5);
+            }else{
+            $specialties = Specialtie::OrderBy('created_at','desc')->paginate(5);
+    
+            }
         return view('admin.specialties.index',compact('specialties'));
     }
 
@@ -41,10 +44,10 @@ class SpecialtiesController extends Controller
     {
         $this->validate($request, [
             'specialty' => 'required',
-            'image_path' => 'required'
+            'image' => 'required'
         ]);
-        $specialties = Specialtie::create($request->all());
-        session()->flash('success', 'New Department Added Successfully.');
+        $specialties = Specialtie::create(['specialty'=>$request->specialty,'image_path'=>$request->image]);
+        session()->flash('success', 'New Specialty Added Successfully.');
         
         return redirect(route('specialties.index'));
     }
@@ -81,12 +84,13 @@ class SpecialtiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $validate=$request->validate([
             'specialty' => 'required',
-            'image_path'=> 'required'
+            'image'=> 'required'
         ]);
         $specialty = Specialtie::find($id);
         $specialty->specialty = $request->specialty;
+        $specialty->image_path=$request->image;
         $specialty->save();
         session()->flash('success', ' Specialty updated Successfully.');
         // redirect user

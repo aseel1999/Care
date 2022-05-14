@@ -7,18 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ResponseMail extends Mailable
+class DoctorMail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $send;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($send)
     {
-        $this->mailData = $mailData;
+        $this->send=$send;
     }
 
     /**
@@ -28,6 +29,6 @@ class ResponseMail extends Mailable
      */
     public function build()
     {
-        return $this->view('admin.email.response');
+        return $this->view('admin.email.doctorMail');;
     }
 }

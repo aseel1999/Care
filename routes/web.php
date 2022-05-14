@@ -35,6 +35,7 @@ Route::prefix('/dashboard')->middleware('auth:admin')->group(function () {
     
     
     Route::resource('/doctors','\App\Http\Controllers\Admin\DoctorsController');
+    Route::post('/doctor-send-email', '\App\Http\Controllers\Admin\DoctorsController@sendEmailtoDoctor')->name('doctor.send');
     Route::resource('/admin/specialties','\App\Http\Controllers\Admin\SpecialtiesController');
     Route::resource('/services','\App\Http\Controllers\ServiceController');
     Route::resource('/users','\App\Http\Controllers\PatientController'); 
@@ -43,6 +44,7 @@ Route::prefix('/dashboard')->middleware('auth:admin')->group(function () {
    Route::get('/status/update/{id}', '\App\Http\Controllers\PatientListController@toggleStatus')->name('update.status');
     Route::get('/all-patients', '\App\Http\Controllers\PatientListController@allTimeAppointment')->name('all.appointments');
     Route::resource('appoinment', '\App\Http\Controllers\AppoinmentController');
+    
     Route::post('/appoinment/check', '\App\Http\Controllers\AppoinmentController@check')->name('appoinment.check');
     
     Route::get('/user-profile/{id}', '\App\Http\Controllers\ProfileController@index')->name('profile');
@@ -50,7 +52,8 @@ Route::prefix('/dashboard')->middleware('auth:admin')->group(function () {
     Route::get('/contacts/{id}', '\App\Http\Controllers\ContactController@response')->name('contact.response');
     
     Route::resource('/contact', '\App\Http\Controllers\ContactController');
-    Route::post('/contac-us', '\App\Http\Controllers\ContactController@sendEmail')->name('contact.us');
+    Route::post('/contact-send-email', '\App\Http\Controllers\ContactController@sendEmail')->name('contact.send.email');
+
     Route::get('/review', '\App\Http\Controllers\ReviewController@index');
     
 

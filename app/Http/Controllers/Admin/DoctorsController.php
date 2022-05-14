@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Mail\DoctorMail;
 use App\Http\Requests\Doctor\CreateDoctorRequest;
 use App\Http\Requests\Doctor\UpdateDoctorRequest;
 use App\Models\Specialtie;
 use Illuminate\Support\Facades\Storage;
+use Mail;
 
 
 class DoctorsController extends Controller
@@ -21,15 +23,12 @@ class DoctorsController extends Controller
     public function index(Request $request)
     {
         $specialties = Specialtie::all();
-        $doctors = Doctor::when($request->search, function ($q) use ($request) {
-           
-            return $q->where('doctor_name', '%' . $request->search . '%');
-
-        })->when($request->specialty_id, function ($q) use ($request) {
-
-            return $q->where('specialty_id', $request->specialty_id);
-
-        })->latest()->paginate(5);
+        if($request->search){
+            $doctors = Doctor::where('doctor_name','=',$request->search)->where('specialty_id','=',$request->specialty_id)->latest()->paginate(5);
+            }else{
+            $doctors = Doctor::OrderBy('created_at','desc')->paginate(5);
+    
+            }
         
        return view('admin.doctors.index', compact('doctors','specialties'));
       
@@ -60,6 +59,7 @@ class DoctorsController extends Controller
             'doctor_phone' => $request->doctor_phone,
             'doctor_email' => $request->doctor_email,
             'doctor_password' => $request->doctor_password,
+            'specialty_id'=>$request->specialty_id,
             'doctor_gender' => $request->doctor_gender,
             'doctor_experience' => $request->doctor_experience,
             'doctor_qualifications' => $request->doctor_qualifications,
@@ -114,7 +114,7 @@ class DoctorsController extends Controller
      */
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
-        $data = $request->only('doctor_name','doctor_phone','doctor_email','doctor_gender', 'doctor_experience', 'doctor_qualifications', 'doctor_certificates','clinic_location','clinic_phone', 'clinic_name', 'booking_price', 'mobile', 'emergency', 'medical_degree', 'specialist', 'biography', 'educational_qualification');
+        $data = $request->only('doctor_name','doctor_phone','specialty_id','doctor_email','doctor_gender', 'doctor_experience', 'doctor_qualifications', 'doctor_certificates','clinic_location','clinic_phone', 'clinic_name', 'booking_price', 'mobile', 'emergency', 'medical_degree', 'specialist', 'biography', 'educational_qualification');
         if ($request->hasFile('image_path')) {
 
             $pic = $request->image_path->store('doctors_pictures');
@@ -129,6 +129,24 @@ class DoctorsController extends Controller
         // redirect user
         return redirect(route('doctors.index'));
         
+    }
+    public function sendEmailtoDoctor(Request $request){
+        $send=[
+            'doctor_name'=>$request->doctor_name,
+            'doctor_email' => $request->doctor_email,
+            'doctor_phone'=>$request->doctor_phone,
+            'specialty_id'=>$request->specialty_id,
+            'clinic_location'=>$request->clinic_location,
+            'clinic_phone'=>$request->clinic_phone,
+            'clinic_name'=>$request->clinic_name,
+            'booking_price'=> $request->booking_price,
+
+            
+        ];
+        $doc=$request->doctor_email;
+        \Mail::to($request->doctor_email)->send(new DoctorMail($send));
+        return back()->with('message_sent','Your Message has been sent successfuly');
+
     }
 
     /**

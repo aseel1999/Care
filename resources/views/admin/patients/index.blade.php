@@ -38,7 +38,7 @@
                     {{ Session::get('message') }}
                 </div>
             @endif
-            <form action="{{ route('users.index') }}" method="POST">
+            <form action="{{ route('users.index') }}" method="GET">
 
                         <div class="row">
                             <div class="col-md-4">
@@ -57,7 +57,7 @@
 
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
-                                    <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add</a>
+                                    
                                     
                                 
                             </div>
@@ -66,7 +66,7 @@
                     </form>
             <div class="card">
                 <div class="card-body ">
-                    <table  class="table">
+                    <table  class="table table-responsive">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -74,6 +74,7 @@
                                 <th>Email</th>
                                 <th>Image_path</th>
                                 <th>Date_of_birth</th>
+                                <th>Doctor_Name</th>
                                 <th>Blood_type</th>
                                 <th>Patient_diseases</th>
                                 <th>Patient_medicines</th>
@@ -84,32 +85,29 @@
                             @if (count($users) > 0)
                                 @foreach ($users as $user)
                                     <tr>
-                                        <td><a href="{{route('profile',$user->id)}}">{{ $user->name }}</a></td>
+                                        <td>{{ $user->name }}</td>
                                         <td>{{ $user->phone }}</td>
                                         <td>{{ $user->email }}</td>
-                                        <td><img src="{{ asset('images') }}" class="table-user-thumb"
-                                                alt="">
+                                        <td><img src="{{asset('assets/images/'.$user->image)}}" class="table-user-thumb"
+                                            width="40">
                                         </td>
                                         <td>{{ $user->date_of_birth }}</td>
+                                        <td>{{$user->doctors->doctor_name}}
                                         <td>{{ $user->blood_type }}</td>
                                         <td>{{ $user->patient_diseases}}</td>
                                         <td>{{ $user->patient_medicines}}</td>
                                         <td>
                                             <div class="table-actions">
-                                            <a href="#" data-toggle="modal" data-target="#exampleModal{{ $doctor->id }}">
+                                                <a href="#" data-toggle="modal" data-target="#exampleModal{{ $user->id }}">
                                                     <i class="btn btn-primary ik ik-eye"></i>
                                                 </a>
-                                                <a href="{{ route('users.edit', $user->id) }}"><i
-                                                        class="btn btn-warning ik ik-edit-2"></i></a>
-
-                                               
 
                                             </div>
                                         </td>
                                     </tr>
-                                    
+                                    @include('admin.patients.model')
                                 @endforeach
-
+                                {{ $users->appends(request()->query())->links() }}
                             @else
                                 <td>No user to display</td>
                             @endif
@@ -120,4 +118,6 @@
             </div>
         </div>
     </div>
+    
+  
 @endsection

@@ -42,11 +42,11 @@
                                 <div class="form-group">
                                 <label for="">Service Name</label>
                             <input type="text" name="service"
-                                class="form-control @error('name') is-invalid @enderror"
+                                class="form-control"
                                 value="{{ $service->name }}">
-                            @error('name')
+                            @error('service')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong class="text-danger">{{ $message }}</strong>
                             </span>
                             @enderror
                                 </div>
@@ -60,9 +60,9 @@
                                         {{ @$specialty->specialty }}</option>
                                 @endforeach
                         </select>
-                        @error('specialty->id')
+                        @error('specialty_id')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong class="text-danger">{{ $message }}</strong>
                         </span>
                         @enderror
                                 </div>
@@ -70,7 +70,7 @@
 
                                 <div class="form-group">
 
-                                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                    <button  class="btn btn-primary mr-2">Submit</button>
                                 </div>
                             </div>
 

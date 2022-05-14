@@ -26,7 +26,7 @@ class Doctor extends Model
         'email_verified_at' => 'datetime',
     ];
     use HasFactory;
-
+    protected $guarded=[];
     public function users(){
         return $this->hasMany(User::class);
     }

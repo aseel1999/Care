@@ -56,7 +56,7 @@
                                     <label>Image</label>
                                     <input type="file"
                                         class="form-control file-upload-info @error('image_path') is-invalid @enderror"
-                                        placeholder="Upload Image" name="image_path">
+                                        placeholder="Upload Image" name="image">
                                     <span class="input-group-append">
 
                                     </span>

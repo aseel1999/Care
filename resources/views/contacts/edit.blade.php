@@ -2,70 +2,73 @@
 
 @section('content')
 
-    <div class="page-header">
-        <div class="row align-items-end">
-            <div class="col-lg-8">
-                <div class="page-header-title">
-                    <i class="ik ik-command bg-blue"></i>
-                    <div class="d-inline">
-                        <h5>Contact</h5>
-                        <span>Update Contact</span>
-                    </div>
+<div class="page-header">
+    <div class="row ">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="ik ik-inbox bg-blue"></i>
+                <div class="d-inline">
+                    <h5>Contact</h5>
+                    
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <nav class="breadcrumb-container" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="../index.html"><i class="ik ik-home"></i></a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#">Contact</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Update</li>
-                    </ol>
-                </nav>
             </div>
         </div>
+        <div class="col-lg-4">
+            <nav class="breadcrumb-container" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="../index.html"><i class="ik ik-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Contact</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Index</li>
+                </ol>
+            </nav>
+        </div>
     </div>
-
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Add Contact</h3>
-                </div>
-                <div class="card-body">
-                    <form class="forms-sample" action="{{ route('contact.update', [$contact->id]) }}" method="post">
-                        @csrf
-                        @method('PATCH')
-                        <div class="form-group">
-              @csrf
-              <label for="name">from:</label>
-              <input type="text" class="form-control" name="rom" value={{ $contact->from}}>
-          </div>
-
-          <div class="form-group">
-              @csrf
-              <label for="name">email:</label>
-              <input type="text" class="form-control" name="email" value={{ $contact->email }}>
-          </div>
-          <div class="form-group">
-              @csrf
-              <label for="name">message:</label>
-              <input type="textarea" class="form-control" name="message" value={{ $contact->message }}>
-          </div>
-          <div class="form-group">
-              @csrf
-              <label for="name">Response:</label>
-              <input type="textarea" class="form-control" name="response" >
-          </div>
-          <button type="submit" class="btn btn-primary">Save & Close</button>
-          <a href="/contact" class="btn btn-secondary">Cancel</a>
-          <button type="reset" class="btn btn-tertiary">Restore Defaults</button>
-      </form>
-       </div>
 </div>
 
-        
 
+<div class="row justify-content-center">
+    <div class="col-md-8 ">
+
+        <div class="card">
+            <div class="card-header">
+                
+
+            </div>
+            <div class="card-body">
+                @if (Session::has('message_sent'))
+                <div class="alert bg-success alert-success text-white" role="alert">
+                    {{ Session::get('message_sent') }}
+                </div>
+                @endif
+            </div>
+            <form class="forms-sample" action="{{ route('contact.send.email') }}" method="POST">
+                @csrf
+                @method('POST')
+                <div class="form-group">
+
+                    <label for="title">from:</label>
+                    <input type="text" name="from" class="form-control" name="title" >
+                </div>
+
+                <div class="form-group">
+
+                    <label for="title">email:</label>
+                    <input type="text" name="email" class="form-control" name="title"  >
+                </div>
+                <div class="form-group">
+
+                    <label for="title">message:</label>
+                    <input type="textarea" name="message" class="form-control" name="title" >
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save & Close</button>
+
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
-          
